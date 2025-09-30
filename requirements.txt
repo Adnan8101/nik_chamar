@@ -1,5 +1,26 @@
-tkinter
-sqlite3
-datetime
-re
-os
+# Personal Journal System - Desktop GUI Application
+# Requirements for Python 3.7+
+
+# Note: All dependencies below are built-in Python standard library modules
+# No external packages need to be installed via pip
+
+# GUI Framework (built-in with Python)
+# tkinter - Included with Python standard library
+
+# Database (built-in with Python)
+# sqlite3 - Included with Python standard library
+
+# Utilities (built-in with Python)
+# datetime - Included with Python standard library
+# re - Included with Python standard library  
+# os - Included with Python standard library
+
+# System Requirements:
+# - Python 3.7 or higher
+# - Operating System: Windows, macOS, or Linux with GUI support
+# - tkinter support (usually included with Python installations)
+
+# To run the application:
+# python run.py
+
+# No pip install required - all dependencies are built-in!
