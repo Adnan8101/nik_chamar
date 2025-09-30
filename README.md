@@ -1,6 +1,6 @@
-# Personal Journal System
+# Personal Journal System - Desktop GUI Application
 
-A simple, secure Flask web application for personal journaling with rich text editing capabilities.
+A simple, secure desktop GUI application for personal journaling built with Python tkinter.
 
 ## Project Team
 **ST AIML-B**
@@ -11,107 +11,125 @@ A simple, secure Flask web application for personal journaling with rich text ed
 ## Features
 
 - **Password Protection**: Single password (1310) to access the application
-- **Rich Text Editor**: Write entries with advanced formatting using Quill.js
+- **Desktop GUI**: Clean, modern interface using tkinter
 - **CRUD Operations**: Create, Read, Update, Delete journal entries
 - **Search Functionality**: Search through your entries
-- **Clean Preview**: Smart content cleaning removes HTML and session tokens
-- **Responsive Design**: Modern UI using TailwindCSS
-- **Simple & Secure**: Single-user system with CSRF protection
+- **Clean Text Display**: Smart content cleaning removes HTML and unwanted tokens
+- **SQLite Database**: Local database storage
+- **Responsive Layout**: Scrollable entries list with modern card design
 
-## Recent Fixes (September 2025)
+## Recent Changes (October 2025)
 
-✅ **CSRF Token Issue**: Fixed delete functionality with proper CSRF tokens  
-✅ **Content Cleaning**: Removed HTML tags and session tokens from previews  
-✅ **Dashboard Design**: Improved layout with better styling and card design  
-✅ **Copyright Update**: Updated to 2025  
-✅ **File Cleanup**: Removed unused directories and files  
-✅ **Enhanced Formatting**: Better rich text display and editing  
+✅ **Converted to Desktop GUI**: Removed Flask web interface, now uses tkinter  
+✅ **SQLite Database**: Direct SQLite integration without ORM  
+✅ **Simplified Dependencies**: Only uses Python standard library modules  
+✅ **Modern GUI Design**: Clean, modern interface with proper styling  
+✅ **Same Core Functionality**: All CRUD operations preserved  
+✅ **Password Protection**: Same 1310 password access system  
 
 ## Setup Instructions
 
-1. **Install Dependencies**
+1. **No Dependencies Required**: Uses only Python standard library
    ```bash
-   pip install -r requirements.txt
+   # tkinter, sqlite3, datetime, re, os are all built-in
    ```
 
 2. **Run the Application**
    ```bash
    python run.py
    ```
+   Or directly:
+   ```bash
+   python journal_gui.py
+   ```
 
 3. **Access the Application**
-   - Open http://127.0.0.1:5000 in your browser
    - Enter password: `1310`
-   - Start journaling!
+   - Start journaling in the desktop app!
 
 ## Project Structure
 
 ```
 nic-py/
-├── app/
-│   ├── __init__.py          # Flask app initialization
-│   ├── models.py            # Database models
-│   ├── forms.py             # WTForms
-│   ├── routes.py            # Application routes
-│   └── templates/           # HTML templates
-│       ├── base.html        # Base template
-│       ├── access.html      # Password access page
-│       ├── dashboard.html   # Main dashboard
-│       ├── create_entry.html# Create new entry
-│       ├── view_entry.html  # View entry
-│       └── edit_entry.html  # Edit entry
-├── config.py                # Configuration
-├── requirements.txt         # Dependencies
+├── database.py              # Database operations class
+├── journal_gui.py           # Main GUI application
 ├── run.py                   # Application entry point
+├── requirements.txt         # Dependencies (standard library only)
+├── .gitignore              # Git ignore file
 └── README.md               # This file
 ```
 
 ## Technology Stack
 
-- **Backend**: Flask 3.0.3, SQLAlchemy 3.1.1, WTForms 3.1.2
-- **Frontend**: HTML5, TailwindCSS, JavaScript
-- **Rich Text Editor**: Quill.js with enhanced toolbar
-- **Database**: SQLite
-- **Icons**: Font Awesome
+- **GUI Framework**: Python tkinter
+- **Database**: SQLite3 (built-in)
+- **Language**: Python 3.x
+- **Styling**: Custom tkinter themes and colors
+
+## GUI Features
+
+### **Main Dashboard**
+- Clean, modern interface with card-based entry display
+- Search functionality with real-time filtering
+- Entry statistics (total count)
+- Scrollable entries list
+- Preview of entry content (first 150 characters)
+
+### **Entry Management**
+- **Create**: Full-screen form with title and content fields
+- **View**: Dedicated view window with formatted display
+- **Edit**: Edit existing entries in popup window
+- **Delete**: Confirmation dialog before deletion
+
+### **Design Elements**
+- **Modern Colors**: Professional blue/gray color scheme
+- **Typography**: Inter font family for clean readability
+- **Interactive Elements**: Hover effects and proper cursor styles
+- **Responsive Layout**: Proper window sizing and scrolling
 
 ## Usage
 
-1. **Access**: Enter password `1310` on the home page
-2. **Create**: Click "New Entry" to write a journal entry with rich formatting
-3. **View**: Click on any entry title to read the full content
-4. **Edit**: Use the edit button to modify existing entries
-5. **Delete**: Remove entries you no longer need (now working properly!)
-6. **Search**: Use the search bar to find specific entries
-7. **Logout**: Click logout to return to password screen
+1. **Launch**: Run `python run.py`
+2. **Access**: Enter password `1310`
+3. **Create**: Click "New Entry" to write a journal entry
+4. **View**: Click on entry titles or "View" button to read full content
+5. **Edit**: Use "Edit" button to modify existing entries
+6. **Delete**: Use "Delete" button with confirmation dialog
+7. **Search**: Type in search box to filter entries
+8. **Logout**: Click "Logout" to return to password screen
 
 ## Database Schema
 
-### JournalEntry
-- `id`: Primary key
-- `title`: Entry title (max 200 chars)
-- `content`: Entry content (rich HTML)
-- `created_at`: Creation timestamp
-- `updated_at`: Last update timestamp
+### **journal_entries** table:
+- `id`: INTEGER PRIMARY KEY AUTOINCREMENT
+- `title`: TEXT NOT NULL (entry title)
+- `content`: TEXT NOT NULL (entry content)
+- `created_at`: TIMESTAMP (creation time)
+- `updated_at`: TIMESTAMP (last update time)
 
 ## Security Features
 
-- CSRF protection on all forms (fixed!)
-- Session-based access control
 - Password protection for application access
+- Local SQLite database (no network access)
 - Input validation and sanitization
-- Content cleaning for safe display
+- Confirmation dialogs for destructive operations
 
-## Rich Text Features
+## GUI Windows
 
-- **Headers**: H1, H2, H3 for content organization
-- **Text Formatting**: Bold, italic, underline, strikethrough
-- **Lists**: Ordered and unordered lists
-- **Quotes**: Styled blockquotes
-- **Code**: Inline code and code blocks
-- **Colors**: Text and background colors
-- **Alignment**: Text alignment options
-- **Links**: Clickable hyperlinks
+1. **Access Window**: Password entry with modern design
+2. **Main Dashboard**: Entry list with search and stats
+3. **Create/Edit Form**: Popup window for entry management
+4. **View Window**: Full entry display with action buttons
+
+## Advantages of GUI Version
+
+✅ **No Web Dependencies**: No Flask, no web server required  
+✅ **Faster Performance**: Direct desktop application  
+✅ **Better User Experience**: Native desktop interface  
+✅ **Offline First**: No internet connection needed  
+✅ **Simpler Setup**: Just run the Python file  
+✅ **Modern Design**: Clean, professional interface  
 
 ---
 
-**Note**: This is a simple personal journal system designed for single-user local use. All major issues have been resolved as of September 2025.
+**Note**: This is a desktop GUI version of the personal journal system. All core functionality has been preserved while providing a better user experience through a native desktop interface.
