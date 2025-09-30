@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}New Entry{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Write a New Entry</h1>
+        <p class="mt-2 text-gray-600">Capture your thoughts and experiences</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <form method="POST" id="entryForm">
+            {{ form.hidden_tag() }}
+            
+            <div class="space-y-6">
+                <!-- Title -->
+                <div>
+                    {{ form.title.label(class="block text-sm font-medium text-gray-700 mb-2") }}
+                    {{ form.title(class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-lg", placeholder="Give your entry a meaningful title...") }}
+                    {% if form.title.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Content -->
+                <div>
+                    {{ form.content.label(class="block text-sm font-medium text-gray-700 mb-2") }}
+                    <div id="editor-container" class="bg-white border border-gray-300 rounded-lg">
+                        <div id="editor" class="rich-text-editor p-4" style="min-height: 300px;">
+                            <!-- Rich text editor content -->
+                        </div>
+                    </div>
+                    {{ form.content(class="hidden", id="hidden-content") }}
+                    {% if form.content.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-between pt-6 border-t">
+                    <a href="{{ url_for('main.dashboard') }}" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Cancel
+                    </a>
+                    
+                    {{ form.submit(class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium") }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize Quill editor with enhanced formatting
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Write your thoughts here...',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                [{ 'size': ['small', false, 'large', 'huge'] }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                ['link'],
+                ['clean']
+            ]
+        },
+        formats: [
+            'header', 'bold', 'italic', 'underline', 'strike',
+            'blockquote', 'code', 'code-block',
+            'list', 'bullet', 'script', 'indent',
+            'size', 'color', 'background', 'align', 'link'
+        ]
+    });
+
+    // Sync Quill content with hidden form field
+    var form = document.getElementById('entryForm');
+    var hiddenContent = document.getElementById('hidden-content');
+    
+    quill.on('text-change', function() {
+        hiddenContent.value = quill.root.innerHTML;
+    });
+
+    form.addEventListener('submit', function() {
+        hiddenContent.value = quill.root.innerHTML;
+    });
+    
+    // Add some custom styling to the editor
+    document.querySelector('.ql-editor').style.fontSize = '16px';
+    document.querySelector('.ql-editor').style.lineHeight = '1.75';
+</script>
+{% endblock %}
